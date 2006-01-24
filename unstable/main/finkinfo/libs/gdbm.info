@@ -10,7 +10,7 @@ Replaces: gdbm3
 UpdateConfigGuess: true
 UpdateLibtool: true
 NoSetCPPFlags: true
-Patch: %f.patch
+Patch: %n.patch
 CompileScript: <<
  ./configure %c
  make prefix=%p

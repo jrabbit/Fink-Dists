@@ -7,7 +7,7 @@ SourceRename: %n-%v.tar.gz
 SourceDirectory: %n-0.34
 Source-MD5: eed75990305d9be63705034cd9dcafdf
 
-Patch: %f.patch
+Patch: %n.patch
 
 CompileScript: <<
   mv debian/changelog debian/changelog.Debian

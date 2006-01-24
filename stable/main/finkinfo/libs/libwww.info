@@ -8,7 +8,7 @@ Source: http://www.w3c.org/Library/Distribution/old/w3c-%n-%v.tar.gz
 Source-MD5: 9bff5c3269d959a49aaf667977676880
 UpdateConfigGuessInDirs: config
 UpdateLibtoolInDirs: config
-Patch: %f.patch
+Patch: %n.patch
 NoSetLDFlags: true
 SetLIBS: -L/%p/lib
 ConfigureParams:  --enable-shared --with-gnu-ld --with-regex --with-zlib
