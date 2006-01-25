@@ -6,7 +6,7 @@ Source: http://vitelus.com/gtkgraph/%n-%v.tar.gz
 Source-MD5: b07b21d3c82f2c8db893850a35357a8c
 BuildDepends: libjpeg, libtiff, netpbm, glib, gtk+, giflib, imlib, gettext-dev, gettext-bin, gettext-tools, x11-dev
 Depends: imlib-shlibs
-Patch: %f.patch
+Patch: %n.patch
 UpdateConfigGuess: true
 UpdatePoMakefile: true
 SetCPPFLAGS: -no-cpp-precomp -Wno-long-double

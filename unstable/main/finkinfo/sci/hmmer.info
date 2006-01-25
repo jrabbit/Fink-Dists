@@ -8,7 +8,7 @@ Source2Rename: 7tm_1
 Source3: http://us.expasy.org/cgi-bin/get-sprot-fasta?P08908
 Source3Rename: P08908.fasta
 BuildDepends: fink (>= 0.24)
-Patch: %f.patch
+Patch: %n.patch
 RuntimeVars: <<
 HMMERDB: /data/hmmerdb
 <<
