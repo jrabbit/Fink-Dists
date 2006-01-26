@@ -5,7 +5,7 @@ Depends: lzo-shlibs
 BuildDepends: lzo
 Source: http://www.oberhumer.com/opensource/lzop/download/%n-%v.tar.gz
 Source-MD5: ef267ac5ea24ccf4ae779f4afb0ab48e
-Patch: %f.patch
+Patch: %n.patch
 UpdateConfigGuessInDirs: acconfig
 SetCFLAGS: -O3 -fstrict-aliasing -funroll-loops -pipe
 ConfigureParams: --mandir=%p/share/man

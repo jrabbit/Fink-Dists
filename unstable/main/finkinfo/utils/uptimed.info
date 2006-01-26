@@ -3,7 +3,7 @@ Version: 0.2.0
 Revision: 1
 Source: mirror:sourceforge:uptimed/%n-%v.tar.bz2
 SourceDirectory: %n-%v
-PatchScript: sed -e s,@FINKPREFIX@,%p, %a/%f.patch | patch -p1
+PatchScript: sed -e s,@FINKPREFIX@,%p, %a/%n.patch | patch -p1
 Depends: daemonic
 ConfigureParams: --mandir='${prefix}/share/man'
 CompileScript: <<

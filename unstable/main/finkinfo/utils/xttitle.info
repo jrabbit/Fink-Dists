@@ -5,7 +5,7 @@ Description: Changes the title of terminal windows
 DescDetail:  Works for both Terminal.app or xterm.
 Source: http://www.jarvis.com/%n/%n-%v.tar.gz
 Source-MD5: 008da2435a50ac6553d1f8f41bd53018
-Patch: %f.patch
+Patch: %n.patch
 DocFiles: README GPL
 InstallScript: <<
  make install prefix=%i
