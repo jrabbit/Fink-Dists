@@ -14,7 +14,7 @@ BuildDepends: x11, x11-dev, gcc3.1
 #Source: mirror:custom:dviware/dvibook.zip
 Source: mirror:sourceforge:fink/dvibook.zip
 Source-MD5: 5990b2777898269612baeea3ba3adea7
-Patch: %f.patch
+Patch: %n.patch
 PatchScript: <<
  head -n 6 Dvibook/dvibook.c > license
  head -n 58 libtex/dvi_draw.c > license.dvi_draw

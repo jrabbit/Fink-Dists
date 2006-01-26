@@ -5,7 +5,7 @@ Source: ftp://ftp.cs.purdue.edu/pub/trinkle/%n-%v.tar.orig
 SourceRename: %n-%v.tar
 Source-MD5: df837b1adb40503f40b94b8169f0e154
 NoSourceDirectory: True
-PatchScript: patch <%a/%f.patch
+PatchScript: patch <%a/%n.patch
 CompileScript: make DESTDIR=%p/bin
 InstallScript: <<
  mkdir -p %i/bin

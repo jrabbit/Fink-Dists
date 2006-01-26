@@ -10,7 +10,7 @@ DescDetail: <<
 Source: http://www.unil.ch/ling/cp/Francais-GUTenberg-v%v.tar.gz
 Source-MD5: 2c76980419efb6bda122a5e0e85c9247
 SourceDirectory: Francais-GUTenberg-v%v
-Patch: %f.patch
+Patch: %n.patch
 CompileScript: <<
 /usr/bin/printf "o\nn\nn\no\no\no\nn\no\nn\nn\n" | ./makehash
 <<
