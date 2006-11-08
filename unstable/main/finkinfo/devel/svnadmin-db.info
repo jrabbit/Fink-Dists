@@ -1,6 +1,6 @@
 Info2: <<
 Package: svnadmin-db%type_pkg[bdb]
-Version: 1.4.0
+Version: 1.4.2
 Revision: 11
 Description: Subversion - svnadmin tool linked to BDB %type_raw[bdb]
 Type: bdb (4.1 4.2 4.3 4.4)
@@ -13,9 +13,9 @@ BuildDepends: fink (>= 0.16.0-1), (%type_pkg[bdb] >= 44) db%type_pkg[bdb]-aes | 
 
 # Unpack Phase:
 Source: http://subversion.tigris.org/downloads/subversion-%v.tar.bz2
-Source-MD5: f0c5fef69fccfb12ef6c8598f484ed0e
+Source-MD5: edebb06afb3266d09e75f728a8259677
 Source2: http://subversion.tigris.org/downloads/subversion-deps-%v.tar.bz2
-Source2-MD5: 6f4c12424074c9348eb6a41f11f687cf
+Source2-MD5: 2c4cc15f902a417247e32f56534a69a6
 
 # Compile Phase:
 SetCPPFLAGS: -no-cpp-precomp
@@ -23,7 +23,7 @@ NoSetLDFLAGS: true
 NoSetLIBS: true
 SetLDFLAGS: -L%p/lib/system-openssl/lib -L%p/lib
 
-ConfigureParams: --libexecdir='${prefix}/lib/svn' --mandir='${prefix}/share/man' --infodir='${prefix}/share/info' --without-neon --disable-shared --without-apxs --without-apache --disable-mod-activation --without-jdk --disable-javahl --with-jikes=no --disable-swig-bindings --without-swig --without-python --without-perl --without-ruby --with-berkeley-db=%p/include/db4:%p/lib
+ConfigureParams: --libexecdir='${prefix}/lib/svn' --mandir='${prefix}/share/man' --infodir='${prefix}/share/info' --without-neon --disable-shared --without-apxs --without-apache --disable-mod-activation --without-jdk --disable-javahl --with-jikes=no --disable-swig-bindings --without-swig --without-python --without-perl --without-ruby --with-berkeley-db=%p/include/db4:%p/lib --disable-dependency-tracking
 GCC: 4.0
 CompileScript: <<
 #! /bin/sh -ev
