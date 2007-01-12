@@ -1,6 +1,6 @@
 Package: mkhexgrid
 Version: 0.1.1
-Revision: 4
+Revision: 1005
 Description: Generates hexagonal grid maps
 License: GPL
 Maintainer: Steve Huff <hakamadare@users.sourceforge.net>
