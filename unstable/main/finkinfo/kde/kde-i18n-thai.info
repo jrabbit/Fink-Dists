@@ -1,9 +1,9 @@
-Package: kde-i18n-vietnamese
+Package: kde-i18n-thai
 Version: 3.5.7
 Revision: 1021
-Description: KDE - languages for Vietnamese
+Description: KDE - languages for Thai
 License: GPL/LGPL
-Maintainer: Benjamin Reed <kde-i18n-vietnamese@fink.racoonfink.com>
+Maintainer: Benjamin Reed <kde-i18n-thai@fink.racoonfink.com>
 
 Depends: <<
 	kdelibs3-unified (>= %v-1021),
@@ -19,14 +19,14 @@ BuildDepends: <<
 	xfonts-intl
 <<
 Replaces: <<
-	koffice-i18n-vietnamese,
+	koffice-i18n-thai,
 	khangman,
 	kturtle
 <<
 
-Source: mirror:kde:stable/%v/src/kde-i18n/kde-i18n-vi-%v.tar.bz2
-Source-MD5: f8aa01eea219b5ed34ecc312a42c50fe
-SourceDirectory: kde-i18n-vi-%v
+Source: mirror:kde:stable/%v/src/kde-i18n/kde-i18n-th-%v.tar.bz2
+Source-MD5: 11a49cc84cc87306dad4c61286ae0048
+SourceDirectory: kde-i18n-th-%v
 PatchScript: perl -pi -e 's,doc/HTML,doc/kde,g' configure
 
 CompileScript: (export HOME=/tmp; export KDEDIR=%p; sh configure %c; find . -name \*.bz2 -exec touch {} \;; make -j2)
@@ -34,8 +34,8 @@ CompileScript: (export HOME=/tmp; export KDEDIR=%p; sh configure %c; find . -nam
 InstallScript: <<
   make -j2 install DESTDIR=%d
   mkdir -p %i/share/doc/kde-installed-packages
-  touch %i/share/doc/kde-installed-packages/kde-i18n-vietnamese
+  touch %i/share/doc/kde-installed-packages/kde-i18n-thai
 <<
 
-DescDetail: Language files for the K Desktop Environment: Vietnamese
+DescDetail: Language files for the K Desktop Environment: Thai
 
