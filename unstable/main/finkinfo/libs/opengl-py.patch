@@ -1090,12 +1090,12 @@ diff -ruN PyOpenGL-2.0.1.09.orig/src/Togl-1.6/Makefile PyOpenGL-2.0.1.09/src/Tog
  
  
 -# $Log$
--# Revision 1.1  2006/09/03 01:34:23  alexkhansen
--# Looks good enough for unstable, anyway.
+-# Revision 1.2  2008/10/26 22:04:41  costabel
+-# Break libGL reexport cycle
 -#
 +# $Log$
-+# Revision 1.1  2006/09/03 01:34:23  alexkhansen
-+# Looks good enough for unstable, anyway.
++# Revision 1.2  2008/10/26 22:04:41  costabel
++# Break libGL reexport cycle
 +#
  # Revision 1.1  2003/02/14 20:18:20  mcfletch
  # Switch to TOGL 1.6 (from CVS) which should support Tk 8.4 (and earlier versions as well)
@@ -1151,7 +1151,7 @@ diff -ruN PyOpenGL-2.0.1.09.orig/src/Togl-1.6/Makefile PyOpenGL-2.0.1.09/src/Tog
 -LIBS = $(TCL_LIBS) -lGLU -lGL -L/usr/X11/lib -lX11 -lXmu -lXext -lXt -lm -ldl
 -STUB_LIBS = $(TCL_STUB_LIBS) -lGLU -lGL -L/usr/X11/lib -lX11 -lXmu -lXext -lXt -lm -ldl
 +LIBS = $(TCL_LIBS) -lGLU -lGL -L/usr/X11R6/lib -lX11 -lXmu -lXext -lXt -lm -ldl
-+STUB_LIBS = $(TCL_STUB_LIBS) -lGLU -lGL -L/usr/X11R6/lib -lX11 -lXmu -lXext -lXt -lm -ldl
++STUB_LIBS = $(TCL_STUB_LIBS) -lGLU -lGL -L/usr/X11R6/lib -lX11 -lXmu -lXext -lXt -lm -ldl -Wl,-dylib_file,/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib:/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib
  
  TK_FLAGS =
  
