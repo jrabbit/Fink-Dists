@@ -1,9 +1,9 @@
 Info4: <<
-Package: qt4-base-x11
+Package: qt4-base-mac
 Version: 4.7.3
 Revision: 1
 Description: Cross-Platform framework (%type_pkg[qt])
-Type: qt (x11)
+Type: qt (mac)
 License: LGPL
 Maintainer: Benjamin Reed <qt4@fink.raccoonfink.com>
 
@@ -49,11 +49,7 @@ BuildDepends: <<
 	macosx (>= 10.4.3-1),
 	pkgconfig (>= 0.23-1),
 	sqlite3-dev,
-	system-openssl-dev,
-	fontconfig2-dev (>= 2.8.0-6),
-	freetype219 (>= 2.4.4-2),
-	xft2-dev (>= 2.2.0-1),
-	x11-dev
+	system-openssl-dev
 <<
 BuildConflicts: kdelibs3-dev, kdelibs3-ssl-dev, kdelibs3-unified-dev, libevent1, clucene-core
 Replaces: qt4-%type_pkg[qt] (<< 4.7.3-1)
@@ -104,20 +100,6 @@ InstallScript: <<
 	make -j1 install INSTALL_ROOT="%d"
 
 	install -d -m 755 %i/bin
-
-	# add the WS_X11 stuff
-	cat <<END >%i/lib/qt4-%type_pkg[qt]/include/QtCore/qglobal.h.new
-#ifndef __USE_WS_X11__
-#define __USE_WS_X11__ 1
-#endif
-
-END
-	cat %i/lib/qt4-%type_pkg[qt]/include/QtCore/qglobal.h >>%i/lib/qt4-%type_pkg[qt]/include/QtCore/qglobal.h.new
-	/bin/mv %i/lib/qt4-%type_pkg[qt]/include/QtCore/qglobal.h.new %i/lib/qt4-%type_pkg[qt]/include/QtCore/qglobal.h
-
-	for bin in linguist designer qtconfig; do
-		ln -sf %p/lib/qt4-%type_pkg[qt]/bin/$bin %i/bin/${bin}4-%type_pkg[qt]
-	done
 
 	#### FIX LA, PRL and PC FILES ####
 
@@ -178,10 +160,17 @@ SplitOff: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1)
 	<<
 	Files: <<
-		lib/qt4-%type_pkg[qt]/lib/libQtCore.4*.dylib
+		lib/qt4-%type_pkg[qt]/lib/QtCore.framework/QtCore
+		lib/qt4-%type_pkg[qt]/lib/QtCore.framework/QtCore_debug
+		lib/qt4-%type_pkg[qt]/lib/QtCore.framework/Versions/4/QtCore
+		lib/qt4-%type_pkg[qt]/lib/QtCore.framework/Versions/4/QtCore_debug
+		lib/qt4-%type_pkg[qt]/lib/QtCore.framework/Versions/Current
 		lib/qt4-%type_pkg[qt]/plugins/codecs
 	<<
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtCore.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtCore.framework/Versions/4/QtCore       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtCore.framework/Versions/4/QtCore_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The Qt Core module forms the foundation of all Qt-based applications
 with core non-graphical classes used by other modules.
@@ -209,10 +198,17 @@ SplitOff2: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1)
 	<<
 	Files: <<
-		lib/qt4-%type_pkg[qt]/lib/libQt3Support.4*.dylib
+		lib/qt4-%type_pkg[qt]/lib/Qt3Support.framework/Qt3Support
+		lib/qt4-%type_pkg[qt]/lib/Qt3Support.framework/Qt3Support_debug
+		lib/qt4-%type_pkg[qt]/lib/Qt3Support.framework/Versions/4/Qt3Support
+		lib/qt4-%type_pkg[qt]/lib/Qt3Support.framework/Versions/4/Qt3Support_debug
+		lib/qt4-%type_pkg[qt]/lib/Qt3Support.framework/Versions/Current
 		lib/qt4-%type_pkg[qt]/plugins/accessible/libqtaccessiblecompatwidgets*
 	<<
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQt3Support.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/Qt3Support.framework/Versions/4/Qt3Support       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/Qt3Support.framework/Versions/4/Qt3Support_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The Qt3Support module provides classes that ease porting
 from Qt 3 to Qt 4.
@@ -233,10 +229,17 @@ SplitOff3: <<
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
 	Files: <<
-		lib/qt4-%type_pkg[qt]/lib/libQtDBus.4*.dylib
+		lib/qt4-%type_pkg[qt]/lib/QtDBus.framework/QtDBus
+		lib/qt4-%type_pkg[qt]/lib/QtDBus.framework/QtDBus_debug
+		lib/qt4-%type_pkg[qt]/lib/QtDBus.framework/Versions/4/QtDBus
+		lib/qt4-%type_pkg[qt]/lib/QtDBus.framework/Versions/4/QtDBus_debug
+		lib/qt4-%type_pkg[qt]/lib/QtDBus.framework/Versions/Current
 		lib/qt4-%type_pkg[qt]/plugins/script/*dbus*
 	<<
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtDBus.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtDBus.framework/Versions/4/QtDBus       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtDBus.framework/Versions/4/QtDBus_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtDBus module is a Unix-only library that you can use to make
 Inter-Process Communication using the D-BUS protocol.
@@ -264,11 +267,18 @@ SplitOff4: <<
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
 	Files: <<
-		lib/qt4-%type_pkg[qt]/lib/libQtDeclarative.4*.dylib
+		lib/qt4-%type_pkg[qt]/lib/QtDeclarative.framework/QtDeclarative
+		lib/qt4-%type_pkg[qt]/lib/QtDeclarative.framework/QtDeclarative_debug
+		lib/qt4-%type_pkg[qt]/lib/QtDeclarative.framework/Versions/4/QtDeclarative
+		lib/qt4-%type_pkg[qt]/lib/QtDeclarative.framework/Versions/4/QtDeclarative_debug
+		lib/qt4-%type_pkg[qt]/lib/QtDeclarative.framework/Versions/Current
 		lib/qt4-%type_pkg[qt]/imports
 		lib/qt4-%type_pkg[qt]/plugins/qmltooling
 	<<
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtDeclarative.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtDeclarative.framework/Versions/4/QtDeclarative       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtDeclarative.framework/Versions/4/QtDeclarative_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The Qt Declarative module provides a declarative framework
 for building highly dynamic, custom user interfaces.
@@ -292,10 +302,17 @@ SplitOff5: <<
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
 	Files: <<
-		lib/qt4-%type_pkg[qt]/lib/libQtDesigner.4*.dylib
+		lib/qt4-%type_pkg[qt]/lib/QtDesigner.framework/QtDesigner
+		lib/qt4-%type_pkg[qt]/lib/QtDesigner.framework/QtDesigner_debug
+		lib/qt4-%type_pkg[qt]/lib/QtDesigner.framework/Versions/4/QtDesigner
+		lib/qt4-%type_pkg[qt]/lib/QtDesigner.framework/Versions/4/QtDesigner_debug
+		lib/qt4-%type_pkg[qt]/lib/QtDesigner.framework/Versions/Current
 		lib/qt4-%type_pkg[qt]/plugins/designer
 	<<
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtDesigner.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtDesigner.framework/Versions/4/QtDesigner       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtDesigner.framework/Versions/4/QtDesigner_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtDesigner module provides classes that allow you to
 create your own custom widget plugins for Qt Designer, and
@@ -317,8 +334,17 @@ SplitOff6: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
-	Files: lib/qt4-%type_pkg[qt]/lib/libQtDesignerComponents.4*.dylib
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtDesignerComponents.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Files: <<
+		lib/qt4-%type_pkg[qt]/lib/QtDesignerComponents.framework/QtDesignerComponents
+		lib/qt4-%type_pkg[qt]/lib/QtDesignerComponents.framework/QtDesignerComponents_debug
+		lib/qt4-%type_pkg[qt]/lib/QtDesignerComponents.framework/Versions/4/QtDesignerComponents
+		lib/qt4-%type_pkg[qt]/lib/QtDesignerComponents.framework/Versions/4/QtDesignerComponents_debug
+		lib/qt4-%type_pkg[qt]/lib/QtDesignerComponents.framework/Versions/Current
+	<<
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtDesignerComponents.framework/Versions/4/QtDesignerComponents       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtDesignerComponents.framework/Versions/4/QtDesignerComponents_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtDesigner module provides classes that allow you to
 create your own custom widget plugins for Qt Designer, and
@@ -341,13 +367,20 @@ SplitOff7: <<
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
 	Files: <<
-		lib/qt4-%type_pkg[qt]/lib/libQtGui.4*.dylib
-		lib/qt4-%type_pkg[qt]/plugins/inputmethods
+		lib/qt4-%type_pkg[qt]/lib/QtGui.framework/QtGui
+		lib/qt4-%type_pkg[qt]/lib/QtGui.framework/QtGui_debug
+		lib/qt4-%type_pkg[qt]/lib/QtGui.framework/Versions/4/QtGui
+		lib/qt4-%type_pkg[qt]/lib/QtGui.framework/Versions/4/QtGui_debug
+		lib/qt4-%type_pkg[qt]/lib/QtGui.framework/Versions/4/Resources/qt_menu.nib
+		lib/qt4-%type_pkg[qt]/lib/QtGui.framework/Versions/Current
 		lib/qt4-%type_pkg[qt]/plugins/accessible/libqtaccessiblewidgets*
 		lib/qt4-%type_pkg[qt]/plugins/graphicssystems/libqtrace*
 		lib/qt4-%type_pkg[qt]/plugins/imageformats
 	<<
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtGui.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtGui.framework/Versions/4/QtGui       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtGui.framework/Versions/4/QtGui_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: The QtGui module extends QtCore with GUI functionality.
 <<
 SplitOff8: <<
@@ -365,8 +398,17 @@ SplitOff8: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
-	Files: lib/qt4-%type_pkg[qt]/lib/libQtHelp.4*.dylib
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtHelp.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Files: <<
+		lib/qt4-%type_pkg[qt]/lib/QtHelp.framework/QtHelp
+		lib/qt4-%type_pkg[qt]/lib/QtHelp.framework/QtHelp_debug
+		lib/qt4-%type_pkg[qt]/lib/QtHelp.framework/Versions/4/QtHelp
+		lib/qt4-%type_pkg[qt]/lib/QtHelp.framework/Versions/4/QtHelp_debug
+		lib/qt4-%type_pkg[qt]/lib/QtHelp.framework/Versions/Current
+	<<
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtHelp.framework/Versions/4/QtHelp       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtHelp.framework/Versions/4/QtHelp_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtHelp module provides classes for integrating online
 documentation in applications.
@@ -381,8 +423,14 @@ SplitOff9: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
-	Files: lib/qt4-%type_pkg[qt]/lib/libQtCLucene.4*.dylib
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtCLucene.4.dylib       4.7.0 %n (>= 4.7.0-1)
+	Files: <<
+		lib/qt4-%type_pkg[qt]/lib/libQtCLucene.4*.dylib
+		lib/qt4-%type_pkg[qt]/lib/libQtCLucene_debug.4*.dylib
+	<<
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/libQtCLucene.4.dylib       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/libQtCLucene_debug.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: The QtClucene module provides support for full text search.
 <<
 SplitOff10: <<
@@ -397,8 +445,17 @@ SplitOff10: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
-	Files: lib/qt4-%type_pkg[qt]/lib/libQtMultimedia.4*.dylib
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtMultimedia.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Files: <<
+		lib/qt4-%type_pkg[qt]/lib/QtMultimedia.framework/QtMultimedia
+		lib/qt4-%type_pkg[qt]/lib/QtMultimedia.framework/QtMultimedia_debug
+		lib/qt4-%type_pkg[qt]/lib/QtMultimedia.framework/Versions/4/QtMultimedia
+		lib/qt4-%type_pkg[qt]/lib/QtMultimedia.framework/Versions/4/QtMultimedia_debug
+		lib/qt4-%type_pkg[qt]/lib/QtMultimedia.framework/Versions/Current
+	<<
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtMultimedia.framework/Versions/4/QtMultimedia       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtMultimedia.framework/Versions/4/QtMultimedia_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: The QtMultimedia module provides low-level multimedia functionality.
 <<
 SplitOff11: <<
@@ -411,10 +468,17 @@ SplitOff11: <<
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
 	Files: <<
-		lib/qt4-%type_pkg[qt]/lib/libQtNetwork.4*.dylib
+		lib/qt4-%type_pkg[qt]/lib/QtNetwork.framework/QtNetwork
+		lib/qt4-%type_pkg[qt]/lib/QtNetwork.framework/QtNetwork_debug
+		lib/qt4-%type_pkg[qt]/lib/QtNetwork.framework/Versions/4/QtNetwork
+		lib/qt4-%type_pkg[qt]/lib/QtNetwork.framework/Versions/4/QtNetwork_debug
+		lib/qt4-%type_pkg[qt]/lib/QtNetwork.framework/Versions/Current
 		lib/qt4-%type_pkg[qt]/plugins/bearer
 	<<
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtNetwork.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtNetwork.framework/Versions/4/QtNetwork       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtNetwork.framework/Versions/4/QtNetwork_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtNetwork module provides classes to make network
 programming easier and portable.
@@ -430,10 +494,17 @@ SplitOff12: <<
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
 	Files: <<
-		lib/qt4-%type_pkg[qt]/lib/libQtOpenGL.4*.dylib
+		lib/qt4-%type_pkg[qt]/lib/QtOpenGL.framework/QtOpenGL
+		lib/qt4-%type_pkg[qt]/lib/QtOpenGL.framework/QtOpenGL_debug
+		lib/qt4-%type_pkg[qt]/lib/QtOpenGL.framework/Versions/4/QtOpenGL
+		lib/qt4-%type_pkg[qt]/lib/QtOpenGL.framework/Versions/4/QtOpenGL_debug
+		lib/qt4-%type_pkg[qt]/lib/QtOpenGL.framework/Versions/Current
 		lib/qt4-%type_pkg[qt]/plugins/graphicssystems/libqgl*
 	<<
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtOpenGL.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtOpenGL.framework/Versions/4/QtOpenGL       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtOpenGL.framework/Versions/4/QtOpenGL_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The Qt OpenGL module makes it easy to use OpenGL in Qt applications.
 It provides an OpenGL widget class that can be used just like any
@@ -450,8 +521,17 @@ SplitOff13: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
-	Files: lib/qt4-%type_pkg[qt]/lib/libQtScript.4*.dylib
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtScript.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Files: <<
+		lib/qt4-%type_pkg[qt]/lib/QtScript.framework/QtScript
+		lib/qt4-%type_pkg[qt]/lib/QtScript.framework/QtScript_debug
+		lib/qt4-%type_pkg[qt]/lib/QtScript.framework/Versions/4/QtScript
+		lib/qt4-%type_pkg[qt]/lib/QtScript.framework/Versions/4/QtScript_debug
+		lib/qt4-%type_pkg[qt]/lib/QtScript.framework/Versions/Current
+	<<
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtScript.framework/Versions/4/QtScript       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtScript.framework/Versions/4/QtScript_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtScript module provides classes for making Qt
 applications scriptable.
@@ -470,8 +550,17 @@ SplitOff14: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
-	Files: lib/qt4-%type_pkg[qt]/lib/libQtScriptTools.4*.dylib
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtScriptTools.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Files: <<
+		lib/qt4-%type_pkg[qt]/lib/QtScriptTools.framework/QtScriptTools
+		lib/qt4-%type_pkg[qt]/lib/QtScriptTools.framework/QtScriptTools_debug
+		lib/qt4-%type_pkg[qt]/lib/QtScriptTools.framework/Versions/4/QtScriptTools
+		lib/qt4-%type_pkg[qt]/lib/QtScriptTools.framework/Versions/4/QtScriptTools_debug
+		lib/qt4-%type_pkg[qt]/lib/QtScriptTools.framework/Versions/Current
+	<<
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtScriptTools.framework/Versions/4/QtScriptTools       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtScriptTools.framework/Versions/4/QtScriptTools_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtScriptTools module provides additional components
 for applications that use Qt Script.
@@ -490,10 +579,17 @@ SplitOff15: <<
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
 	Files: <<
-		lib/qt4-%type_pkg[qt]/lib/libQtSql.4*.dylib
+		lib/qt4-%type_pkg[qt]/lib/QtSql.framework/QtSql
+		lib/qt4-%type_pkg[qt]/lib/QtSql.framework/QtSql_debug
+		lib/qt4-%type_pkg[qt]/lib/QtSql.framework/Versions/4/QtSql
+		lib/qt4-%type_pkg[qt]/lib/QtSql.framework/Versions/4/QtSql_debug
+		lib/qt4-%type_pkg[qt]/lib/QtSql.framework/Versions/Current
 		lib/qt4-%type_pkg[qt]/plugins/sqldrivers
 	<<
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtSql.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtSql.framework/Versions/4/QtSql       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtSql.framework/Versions/4/QtSql_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtSQL module provides support for accessing SQL
 databases in Qt.
@@ -512,10 +608,17 @@ SplitOff16: <<
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
 	Files: <<
-		lib/qt4-%type_pkg[qt]/lib/libQtSvg.4*.dylib
+		lib/qt4-%type_pkg[qt]/lib/QtSvg.framework/QtSvg
+		lib/qt4-%type_pkg[qt]/lib/QtSvg.framework/QtSvg_debug
+		lib/qt4-%type_pkg[qt]/lib/QtSvg.framework/Versions/4/QtSvg
+		lib/qt4-%type_pkg[qt]/lib/QtSvg.framework/Versions/4/QtSvg_debug
+		lib/qt4-%type_pkg[qt]/lib/QtSvg.framework/Versions/Current
 		lib/qt4-%type_pkg[qt]/plugins/iconengines/libqsvg*
 	<<
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtSvg.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtSvg.framework/Versions/4/QtSvg       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtSvg.framework/Versions/4/QtSvg_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtSvg module provides classes for displaying
 and creating SVG files.
@@ -530,8 +633,17 @@ SplitOff17: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
-	Files: lib/qt4-%type_pkg[qt]/lib/libQtTest.4*.dylib
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtTest.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Files: <<
+		lib/qt4-%type_pkg[qt]/lib/QtTest.framework/QtTest
+		lib/qt4-%type_pkg[qt]/lib/QtTest.framework/QtTest_debug
+		lib/qt4-%type_pkg[qt]/lib/QtTest.framework/Versions/4/QtTest
+		lib/qt4-%type_pkg[qt]/lib/QtTest.framework/Versions/4/QtTest_debug
+		lib/qt4-%type_pkg[qt]/lib/QtTest.framework/Versions/Current
+	<<
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtTest.framework/Versions/4/QtTest       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtTest.framework/Versions/4/QtTest_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtTest module provides classes for unit testing
 Qt applications and libraries.
@@ -546,8 +658,17 @@ SplitOff18: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
-	Files: lib/qt4-%type_pkg[qt]/lib/libQtXml.4*.dylib
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtXml.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Files: <<
+		lib/qt4-%type_pkg[qt]/lib/QtXml.framework/QtXml
+		lib/qt4-%type_pkg[qt]/lib/QtXml.framework/QtXml_debug
+		lib/qt4-%type_pkg[qt]/lib/QtXml.framework/Versions/4/QtXml
+		lib/qt4-%type_pkg[qt]/lib/QtXml.framework/Versions/4/QtXml_debug
+		lib/qt4-%type_pkg[qt]/lib/QtXml.framework/Versions/Current
+	<<
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtXml.framework/Versions/4/QtXml       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtXml.framework/Versions/4/QtXml_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtXml module provides a stream reader and writer
 for XML documents, and C++ implementations of SAX and DOM.
@@ -566,8 +687,17 @@ SplitOff19: <<
 		qt4-%type_pkg[qt]-core-shlibs (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-gui-shlibs (<< 4.7.3-1)
 	<<
-	Files: lib/qt4-%type_pkg[qt]/lib/libQtXmlPatterns.4*.dylib
-	Shlibs: %p/lib/qt4-%type_pkg[qt]/lib/libQtXmlPatterns.4.dylib 4.7.0 %n (>= 4.7.0-1)
+	Files: <<
+		lib/qt4-%type_pkg[qt]/lib/QtXmlPatterns.framework/QtXmlPatterns
+		lib/qt4-%type_pkg[qt]/lib/QtXmlPatterns.framework/QtXmlPatterns_debug
+		lib/qt4-%type_pkg[qt]/lib/QtXmlPatterns.framework/Versions/4/QtXmlPatterns
+		lib/qt4-%type_pkg[qt]/lib/QtXmlPatterns.framework/Versions/4/QtXmlPatterns_debug
+		lib/qt4-%type_pkg[qt]/lib/QtXmlPatterns.framework/Versions/Current
+	<<
+	Shlibs: <<
+		%p/lib/qt4-%type_pkg[qt]/lib/QtXmlPatterns.framework/Versions/4/QtXmlPatterns       4.7.0 %n (>= 4.7.0-1)
+		%p/lib/qt4-%type_pkg[qt]/lib/QtXmlPatterns.framework/Versions/4/QtXmlPatterns_debug 4.7.0 %n (>= 4.7.0-1)
+	<<
 	DescDetail: <<
 The QtXmlPatterns module provides support for XPath, XQuery,
 XSLT and XML Schema validation.
@@ -587,7 +717,7 @@ SplitOff20: <<
 		qt4-%type_pkg[qt] (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-assistant (<< 4.7.3-1)
 	<<
-	Files: lib/qt4-%type_pkg[qt]/bin/assistant*
+	Files: lib/qt4-%type_pkg[qt]/bin/Assistant*
 	DescDetail: Qt Assistant is a tool for presenting on-line documentation.
 <<
 SplitOff21: <<
@@ -605,10 +735,7 @@ SplitOff21: <<
 		qt4-%type_pkg[qt] (<< 4.7.3-1),
 		qt4-%type_pkg[qt]-designer (<< 4.7.3-1)
 	<<
-	Files: <<
-		lib/qt4-%type_pkg[qt]/bin/designer*
-		bin/designer4-%type_pkg[qt]
-	<<
+	Files: lib/qt4-%type_pkg[qt]/bin/Designer*
 	DescDetail: <<
 Qt Designer is Qt's tool for designing and building graphical user
 interfaces (GUIs) from Qt components.  You can compose and customize
@@ -637,7 +764,7 @@ SplitOff22: <<
 	<<
 	Files: <<
 		lib/qt4-%type_pkg[qt]/bin/l*
-		bin/linguist4-%type_pkg[qt]
+		lib/qt4-%type_pkg[qt]/bin/Linguist*
 		lib/qt4-%type_pkg[qt]/phrasebooks
 	<<
 	DescDetail: <<
